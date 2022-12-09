@@ -1,0 +1,337 @@
+type Point= {
+  x:number;
+  y:number;   
+};  
+// Exactly the same as the earlier example
+function printCoord(pt: Point) {
+  console.log("The coordinate's x value is " + pt.x);
+  console.log("The coordinate's y value is " + pt.y);
+}
+
+interface IAnimal{
+  nume:string;
+}
+
+interface IAnimal{
+  areBlana:boolean;
+}
+
+interface Dog extends IAnimal{
+  hasOwner:boolean;
+  sound() :void
+  
+}
+
+const x = ("hello" as unknown) as number;
+//console.log(x);
+function printText(s:string, alignment:"left"| "right"|"center"){
+  console.log(s + " " + alignment);
+}
+
+//printText("How","center"); 
+//printText("Eleven", "bottom");
+
+function compare(a:number, b:number): -1|0|1{
+  return a===b ? 0 : a>b ? 1:-1;
+}
+
+
+function afis(){
+ var x:number = 12123;
+ let y:number = 15;
+ var c :number = compare(x,y); 
+ if(c==0){
+  console.log("Numere egale"); 
+ }
+ else if(c==1){
+  console.log("a>b");
+ }
+ else{
+  console.log("a<b"); 
+ }
+} 
+
+//afis(); 
+
+interface Options{
+  width:number;
+}
+
+function configure(w:Options|"auto"){
+  if(w === "auto"){
+    console.log("width auto  = " + 123);
+  }
+  else{
+    console.log("width = " + w.width); 
+  }
+}
+
+//configure({width:100});
+//configure("auto"); 
+
+const obj = {isEqual:0}
+if(compare(121,121)===0){
+  obj.isEqual= 1; 
+}
+//console.log(obj.isEqual); 
+
+//const req={url:"https://exemplu.ro", method:"GET" as "GET"};
+
+const req = {url:"https://exemplu.ro", method:"GET"} as const; 
+
+function handleRequest(url:string, method:"GET"|"POST"){
+  console.log(url + " " +method);
+} 
+
+//handleRequest(req.url,req.method);
+console.clear();
+
+/*function sayHello(x:string|null){
+  if(typeof x == "string"){
+    console.log("Hello " + x  + "!"); 
+    console.log(`Hello ${x}!`); 
+  }
+}
+*/
+function sayHello(x?:string|null){
+  console.log(x!.length); 
+}
+
+//sayHello();
+
+enum Direction{
+  Up ,
+  Down,
+  Left,
+  Right 
+};
+
+//console.log(Direction.Up);
+
+function padLeft(padding:number|string, input:string){
+  if(typeof padding === "number"){
+      return " ".repeat(padding) + input; 
+  }
+  return padding + " " + input; 
+}
+
+
+//let s = padLeft(3,"eemmmpppllluu");
+//console.log(s);
+//s = padLeft("123", "punct 456");
+//console.log(s);   
+//console.log(s.charAt(4));
+
+function printAll(strs: string|string[]|null){
+  /*if(typeof strs ==="object"){
+    if(strs!=null){
+      console.log("Vector"); 
+      for(s of strs){
+          console.log(s); 
+      }
+    }
+    else{
+      console.log("NULL"); 
+    }
+  }
+  else if(typeof strs === "string"){
+  console.log("String "  + strs); 
+  }*/
+
+  if(strs && typeof strs ==="object"){
+    console.log("Vector");
+    for(s of strs){
+      console.log(s);
+    }
+  }
+  else if(typeof strs === "string"){
+    console.log("String " + strs); 
+  }
+  else{
+    console.log("NULL");
+  }
+}
+
+let s = "123asd";
+let s1 = null;
+var s2 =["ASD","f32","2323r","6577775"]; 
+
+//printAll(s);
+//printAll(s1); 
+//printAll(s2);
+
+function multiplyAll(values: number[]|undefined, factor:number){
+  if(!values){
+    return values; 
+  } 
+  else{
+    return values.map(x=>x*factor); 
+  }
+}
+
+
+let undef = multiplyAll(undefined, 2);
+
+//console.log(undef); 
+
+
+let v = multiplyAll([1,2,3,4,4,5],4);
+
+//console.log(v); 
+
+console.clear();
+
+
+type Fish = {
+  swim: ()=>void;
+}
+type Bird ={
+  fly:()=>void; 
+}
+
+type Human = {
+  swim?:()=>void;
+  fly?:()=>void; 
+}
+
+function move(animal: Fish|Bird|Human){
+  if("swim" in animal){
+    animal; 
+  }
+  else{
+    animal; 
+  }
+}
+
+class Student{
+  nume:string = ""; 
+  constructor(n:string){
+    this.nume = n; 
+  }
+}
+
+function logValue(x:Student|string):void{
+  if(x instanceof Student){
+    console.log("Student " + x.nume);
+  }
+  else{
+    console.log("String " + x.toUpperCase()); 
+  }
+}
+
+console.clear();
+//logValue(new Student("Alex"));
+//logValue("Abecedar"); 
+
+interface Circle{
+  kind:"circle";
+  radius:number;
+}
+
+interface Square{
+  kind:"square";
+  sidelength:number; 
+}
+
+interface Triangle{
+  kind:"triangle"; 
+  sidelength:number; 
+}
+
+type Shape = Circle|Square|Triangle;
+
+/*function getArea(shape:Shape){
+  if(shape.kind== "circle"){
+    return Math.PI*shape.radius**2; 
+  }
+  else{
+    return shape.sidelength**2; 
+  }
+}*/
+
+function getArea(shape:Shape){
+  switch(shape.kind){
+    case "circle":{
+      return Math.PI*shape.radius**2;
+    }
+    case "square":{
+      return shape.sidelength**2;
+    }
+    case "triangle":{
+      return shape.sidelength;
+    }
+    default:{
+    const _exhCheck:never = shape;
+    return _exhCheck; 
+  }
+  }
+}
+
+//console.log(getArea({kind:"circle",radius:5*1.4})); 
+//console.log(getArea({kind:"square",sidelength:10})); 
+
+
+/*function greeter(fn:(a:string)=>void){
+  fn("Hello, World!"); 
+}*/
+
+function printToConsole(s:string){
+ console.log(s);  
+}
+
+function printNumberOfL(s:string){
+  var ct=0; 
+  for(let i=0;i<s.length;i++){
+    if(s.charAt(i)=='l' || s.charAt(i)=='L'){
+      ct++; 
+    }
+  }
+  console.log(ct); 
+}
+
+type GreetFunction=(a:string)=>void;
+function greeter(fn:GreetFunction){
+  fn("Hello, World!");
+}
+
+//greeter(printToConsole);
+//greeter(printNumberOfL);
+
+type DescribableFunction={
+  description:string;
+  (arg:number):boolean; 
+}
+
+function Product(fn:DescribableFunction){
+  console.log(fn.description + fn(10));
+}
+
+function NrDiv10(x:number):boolean{
+  if(x%10===0){
+    return true;
+  }
+  return false; 
+}
+
+//var y:DescribableFunction={description:"123",};
+
+type Constructor={
+  new (a:string):number;
+}
+
+function fn1(ctor:Constructor){
+  return new ctor("Hello"); 
+}
+
+function returnFirstElement <Type>(v:Type[]):Type|undefined{
+  return v[0]; 
+}
+
+let v1: number[] = [1,2,3,4,5,6];
+let v2: string[] = ["123","as3","1243124"]; 
+
+console.log(returnFirstElement(v1));
+console.log(returnFirstElement(v2)); 
+console.log(returnFirstElement(["a","b","c","d"]));
+
+console.clear();
